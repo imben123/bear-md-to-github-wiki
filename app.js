@@ -6,7 +6,7 @@ const path = require('path');
 const args = process.argv.slice(1);
 checkArguments(args);
 
-var currentDirectory = getArgument("--dir", "-d", __dirname);
+var currentDirectory = getArgument("--dir", "-d", ".");
 var verbose = getArgument("--verbose", "-v", false);
 
 var replacementFile = getArgument("--replacements", "-r", null);
@@ -95,7 +95,8 @@ function updateBearFile(filePath, relativeDirectory) {
 	var codeSnippets = stringAndCodeSnippets.snippets;
 
 	// Remove title
-	if ( string.startsWith('# ') ) {
+	var fileName = path.basename(filePath).replace(".md", "");
+	if ( string.startsWith('# ' + fileName) ) {
 		string = string.replace(/(.*)# [^\n]*\n(.*)/, "$1$2");
 	}
 
@@ -106,7 +107,7 @@ function updateBearFile(filePath, relativeDirectory) {
 	}
 
 	// Fix Image Links
-	if ( relativeDirectory !== __dirname ) {
+	if ( relativeDirectory !== "." ) {
 
 		// Remove previously fixed images to prevent adding the directory multiple times
 		var removeDirectoryRegex = new RegExp("!\\[\\]\\(" + relativeDirectory + "\\/(.*)\\)", "gm");
@@ -118,7 +119,7 @@ function updateBearFile(filePath, relativeDirectory) {
 	// Fix Single Line Breaks
 	// We repeat this a few times as the regex can overlap multiple occurrences missing some
 	for (var i = 0; i < 3; i++) {
-		string = string.replace(/(\n[^\n#]*[a-zA-Z\.])(\n[a-zA-Z])/gm, "$1<br>$2")
+		string = string.replace(/(^\n?[^\n#]*[a-zA-Z\.\?\!\)\*\ ])(\n[a-zA-Z✓✗\(])/gm, "$1<br>$2")
 	}
 
 	string = reInsertCodeSnippets(string, codeSnippets);
