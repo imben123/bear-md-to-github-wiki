@@ -1,0 +1,14 @@
+{
+  "name": "bear-md-to-github-wiki",
+  "version": "1.0.0",
+  "description": "Takes the output of Bear notes which were exported in Markdown format, and prepares them to be used in a GitHub wiki.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "bear-md-to-github-wiki": "./app.js"
+  },
+  "author": "Ben Davis",
+  "license": "ISC"
+}
