@@ -103,7 +103,7 @@ function updateBearFile(filePath, relativeDirectory) {
 	for (var i = 0; i < replacements.length; i++) {
 		var search = replacements[i].search;
 		var replacement = replacements[i].replacement;
-		string = string.replace(search, replacement);
+		string = string.split(search).join(replacement)
 	}
 
 	// Fix Image Links
